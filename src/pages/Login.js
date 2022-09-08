@@ -11,8 +11,6 @@ class Login extends React.Component {
   };
 
   onInputChange = ({ target }) => {
-    const regex = /[a-z0-9]+@[a-z]+\.[a-z]/;
-    const passwordMinLength = 6;
     const { value, type } = target;
 
     if (type === 'email') {
@@ -25,12 +23,18 @@ class Login extends React.Component {
         passwordValue: value,
       });
     }
+    this.handleValidation();
+  };
 
-    const { passwordValue, emailValue } = this.state;
-
-    if (passwordValue.length >= passwordMinLength && regex.test(emailValue)) {
-      this.setState({ isDisabled: false });
-    }
+  handleValidation = () => {
+    const regex = /[a-z0-9]+@[a-z]+\.[a-z]/;
+    const passwordMinLength = 6;
+    this.setState(({ passwordValue, emailValue }) => {
+      if (passwordValue.length >= passwordMinLength && regex.test(emailValue)) {
+        return { isDisabled: false };
+      }
+      return { isDisabled: true };
+    });
   };
 
   onButtonClick = (event) => {
@@ -38,7 +42,7 @@ class Login extends React.Component {
     const { emailValue } = this.state;
     const { data, history } = this.props;
 
-    data({ emailValue });
+    data(emailValue);
 
     history.push('/carteira');
   };
