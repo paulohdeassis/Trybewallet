@@ -1,4 +1,4 @@
-import { USER_EMAIL } from '../actions/index';
+import { USER_EMAIL } from '../actions/getMail';
 
 const CURRENT_STATE = {
   email: '',
