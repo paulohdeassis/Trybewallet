@@ -2,17 +2,17 @@ import { getCurrency, getExpenses } from '../../services/apiRequests';
 
 export const CURRENCY = 'CURRENCY';
 export const EXPENSES = 'EXPENSES';
-export const REMOVE_CURRENCY = 'REMOVE_CURRENCY';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const currencyAction = (currencies) => ({
   type: CURRENCY,
   payload: currencies,
 });
 
-/* (export const expensesAction = (expenses) => ({
+export const expensesAction = (expenses) => ({
   type: EXPENSES,
   payload: expenses,
-}) */
+});
 
 export const handleCurrencyResponse = () => async (dispatch) => {
   const apiResponse = await getCurrency();
@@ -21,7 +21,14 @@ export const handleCurrencyResponse = () => async (dispatch) => {
   return dispatch(currencyAction(result));
 };
 
-/* const handleExpensesResponse = async (dispatch) => {
-  const expensesApi = await getExpenses();
+export const handleExpensesResponse = (expense) => async (dispatch) => {
+  const apiResponse = await getExpenses();
 
-}; */
+  const allExpenses = {
+    ...expense,
+    exchangeRates: apiResponse,
+
+  };
+
+  return dispatch(expensesAction(allExpenses));
+};
