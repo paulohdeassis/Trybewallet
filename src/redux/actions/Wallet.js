@@ -14,6 +14,11 @@ export const expensesAction = (expenses) => ({
   payload: expenses,
 });
 
+export const removeExpenseAction = (expenses) => ({
+  type: REMOVE_EXPENSE,
+  payload: expenses,
+});
+
 export const handleCurrencyResponse = () => async (dispatch) => {
   const apiResponse = await getCurrency();
   const filteredArray = Object.keys(apiResponse);

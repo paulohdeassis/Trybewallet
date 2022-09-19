@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import { removeExpenseAction } from '../redux/actions/Wallet';
 
 class Table extends Component {
+  handleExpenseRemove = (expenses) => {
+    const { dispatch } = this.props;
+    dispatch(removeExpenseAction(expenses));
+  };
+
   render() {
     const { expenses } = this.props;
     return (
@@ -37,11 +43,18 @@ class Table extends Component {
 
               </td>
               <td>Real</td>
-
+              <td>
+                <button
+                  data-testid="delete-btn"
+                  type="button"
+                  onClick={ () => this.handleExpenseRemove(expense.id) }
+                >
+                  Excluir
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
-        z
       </table>
     );
   }
@@ -49,6 +62,7 @@ class Table extends Component {
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
