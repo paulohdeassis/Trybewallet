@@ -5,7 +5,7 @@ import renderWithRouterAndRedux from './helpers/renderWith';
 
 import App from '../App';
 
-describe('Realiza os testes para tentar atingir 60% de cobertura da aplicação', () => {
+describe('Realiza os testes para a página de login', () => {
   test('Verifica se o a tela de login habilita o botão de salvar apenas depois de receber um email e senha corretos', () => {
     renderWithRouterAndRedux(<App />);
 
