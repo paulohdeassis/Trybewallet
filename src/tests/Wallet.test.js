@@ -5,6 +5,7 @@ import renderWith from './helpers/renderWith';
 import globalState from './helpers/globalStateMock';
 import App from '../App';
 
+const testExpense = 'Despesa de teste';
 describe('Realiza testes da página Wallet e do componente WalletForm', () => {
   test('Testa se é possível adicionar uma despesa corretamente', async () => {
     const { history } = renderWith(<App />, { initialEntries: ['/carteira'], inicialState: globalState });
@@ -25,20 +26,19 @@ describe('Realiza testes da página Wallet e do componente WalletForm', () => {
     expect(addExpenseBtn).toBeInTheDocument();
 
     userEvent.type(valueInput, '10,00');
-    userEvent.type(descriptionInput, 'Despesa de teste');
+    userEvent.type(descriptionInput, testExpense);
     userEvent.click(addExpenseBtn);
 
-    const description = await waitFor(() => screen.getByText('Despesa de teste'));
+    const description = await waitFor(() => screen.getByText(testExpense));
 
     expect(description).toBeInTheDocument();
 
     /* const teste = screen.queryByRole('Test expense');
-
     expect(sumOfExpenses.textContent).toBe('0.00');
     expect(mailField.textContent).toBe(globalState.user.email);
     expect(editBtn).toBeInTheDocument();
     userEvent.type(valueInput, '10,00');
-    userEvent.type(descriptionInput, 'Despesa de teste');
+
     userEvent.click(addExpenseBtn);
     const expenseDescription = screen.getByTestId('expense-value-0');
     console.log(expenseDescription); */
@@ -56,7 +56,7 @@ describe('Realiza testes da página Wallet e do componente WalletForm', () => {
     userEvent.click(AddEditBtn);
 
     const editBtn = await waitFor(() => screen.getByTestId('edit-btn'));
-    const removeBtn = await waitFor(() => screen.getByTestId('delete-btn'));
+    // const removeBtn = await waitFor(() => screen.getByTestId('delete-btn'));
     const valueTxt = await waitFor(() => screen.getByTestId('expense-value-0'));
 
     console.log(valueTxt.textContent);
